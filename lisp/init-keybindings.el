@@ -68,7 +68,6 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
-(define-key global-map (kbd "s-e") 'rime-inline-ascii)
 (global-set-key (kbd "s-/") 'hippie-expand)
 
 
@@ -208,9 +207,8 @@
     "K" 'buf-move-up)
 
   (+general-global-menu! "toggle" "t"
-    "s" 'flycheck-mode
     "S" 'flyspell-prog-mode
-    "e" 'toggle-corfu-english-helper
+    "e" 'toggle-
     "r" 'read-only-mode
     "n" 'my-toggle-line-numbber
     "w" 'distraction-free

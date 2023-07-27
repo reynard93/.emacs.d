@@ -29,7 +29,6 @@
   ;; https://www.emacswiki.org/emacs/AutoModeAlist
   ;; \\' means the end of the file
   (add-to-list 'auto-mode-alist '("Puffer\\'" . json-mode))
-  :hook (json-mode . flycheck-mode)
   :config)
 
 
@@ -54,11 +53,7 @@
                                  ("Task" "[. \t]task([ \t]*['\"]\\([^'\"]+\\)" 1)))))
   (add-hook 'js2-mode-hook
             (lambda ()
-              (setq imenu-create-index-function 'js2-imenu-make-index)))
-
-
-
-  (add-hook 'js2-mode-hook 'flycheck-mode))
+              (setq imenu-create-index-function 'js2-imenu-make-index))))
 
 (use-package typescript-mode
   :ensure t)

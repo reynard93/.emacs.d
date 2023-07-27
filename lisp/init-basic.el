@@ -69,28 +69,6 @@
   ;; Don't ping things that look like domain names.
   (setq ffap-machine-p-known 'reject)
 
-  (if sys/win32p
-      (progn
-        (defvar emax-root (concat (expand-file-name "~") "/emax"))
-        (defvar emax-bin (concat emax-root "/bin"))
-        (defvar emax-bin64 (concat emax-root "/bin64"))
-
-        (setq exec-path (cons emax-bin exec-path))
-        (setenv "PATH" (concat emax-bin ";" (getenv "PATH")))
-
-        (setq exec-path (cons emax-bin64 exec-path))
-        (setenv "PATH" (concat emax-bin64 ";" (getenv "PATH")))
-
-        (setq emacsd-bin (concat user-emacs-directory "bin"))
-        (setq exec-path (cons  emacsd-bin exec-path))
-        (setenv "PATH" (concat emacsd-bin  ";" (getenv "PATH")))
-
-        (setenv "PATH" (concat "C:\\msys64\\usr\\bin;C:\\msys64\\mingw64\\bin;" (getenv "PATH")))
-
-        ;; (dolist (dir '("~/emax/" "~/emax/bin/" "~/emax/bin64/" "~/emax/lisp/" "~/emax/elpa/"))
-        ;;   (add-to-list 'load-path dir))
-        ))
-
   ;; Garbage Collector Magic Hack
   (use-package gcmh
     :diminish
@@ -104,45 +82,22 @@
 (when (fboundp 'set-charset-priority)
   (set-charset-priority 'unicode))
 
-;; Explicitly set the prefered coding systems to avoid annoying prompt
-;; from emacs (especially on Microsoft Windows)
-
-
-(set-language-environment 'chinese-gbk)
-(prefer-coding-system 'utf-8-auto)
-
-;; (prefer-coding-system 'utf-8)
-;; (setq locale-coding-system 'utf-8)
-
-;; (set-language-environment 'utf-8)
-;; (set-default-coding-systems 'utf-8)
-;; (set-buffer-file-coding-system 'utf-8)
-;; (set-clipboard-coding-system 'utf-8)
-;; https://emacs-china.org/t/windows-openwithemacs/21353
-(if sys/macp
-    (set-file-name-coding-system 'utf-8)
-  (set-file-name-coding-system 'gbk))
-;; (set-keyboard-coding-system 'utf-8)
-;; (set-terminal-coding-system 'utf-8)
-;; (set-selection-coding-system 'utf-8)
-;; (modify-coding-system-alist 'process "*" 'utf-8)
-
 ;; Environment
-(when (or sys/mac-x-p sys/linux-x-p (daemonp))
-  (use-package exec-path-from-shell
-    :init
-    (setq exec-path-from-shell-variables '("PATH" "MANPATH")
-          exec-path-from-shell-arguments '("-l"))
-    (exec-path-from-shell-initialize)))
+;; (when (or sys/mac-x-p sys/linux-x-p (daemonp))
+;;   (use-package exec-path-from-shell
+;;     :init
+;;     (setq exec-path-from-shell-variables '("PATH" "MANPATH")
+;;           exec-path-from-shell-arguments '("-l"))
+;;     (exec-path-from-shell-initialize)))
 
 ;; Start server
-(use-package server
-  :ensure nil
-  :if zilongshanren-server
-  :hook (after-init . (lambda ()
-                        ;; (server-force-delete)
-                        (server-mode)))
-  )
+;; (use-package server
+;;   :ensure nil
+;;   :if zilongshanren-server
+;;   :hook (after-init . (lambda ()
+;;                         ;; (server-force-delete)
+;;                         (server-mode)))
+;;   )
 
 ;; History
 (use-package saveplace
@@ -207,11 +162,10 @@
   :init (setq display-time-24hr-format t
               display-time-day-and-date t))
 
-(when emacs/>=27p
-  (use-package so-long
-    :ensure nil
-    :hook (after-init . global-so-long-mode)
-    :config (setq so-long-threshold 4000)))
+(use-package so-long
+  :ensure nil
+  :hook (after-init . global-so-long-mode)
+  :config (setq so-long-threshold 4000))
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -245,16 +199,9 @@
 ;; turn on abbrev mode globally
 (setq-default abbrev-mode t)
 
-(if sys/macp
-    (setq find-program "/opt/homebrew/bin/fd")
-  (setq find-program "fd"))
-
-(define-abbrev-table 'global-abbrev-table '(
-					                        ;; signature
-					                        ("8zl" "zilongshanren")
-					                        ;; Microsoft
-					                        ("8ms" "Microsoft")
-					                        ))
+;; (if sys/macp
+;;     (setq find-program "/Users/reynardlee/.nix-profile/bin/fd")
+;;   (setq find-program "fd"))
 
 (setq-default split-height-threshold nil)
 ;; prevent dired window split 3 columns
@@ -271,10 +218,6 @@
 
 (use-package tar-mode
   :ensure t)
-
-(use-package restart-emacs
-  :ensure t
-  :commands (restart-emacs))
 
 (add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
 

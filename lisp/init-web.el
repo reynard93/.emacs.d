@@ -30,7 +30,7 @@
       (append
        '(
          ("\\.js\\'" . js-mode)
-         ;; ("\\.vue\\'" . web-mode)
+         ("\\.vue\\'" . vue-mode)
          ("\\.html\\'" . web-mode)
          ("\\.html.eex\\'" . web-mode)
          )
@@ -38,8 +38,6 @@
 
 (use-package typescript-mode
   :ensure t)
-;; (use-package vue-mode
-;;   :ensure t)
 
 (use-package web-mode
   :ensure t

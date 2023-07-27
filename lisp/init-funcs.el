@@ -1363,32 +1363,21 @@ Puts point in the middle line as well as indent it by correct amount."
 
 (defun my-goto-next-error ()
   (interactive)
-  (cond (flycheck-mode
-         (flycheck-next-error))
-        (lsp-bridge-mode
-         (lsp-bridge-diagnostic-jump-next))
-        (flymake-mode
+  (cond (flymake-mode
          (flymake-goto-next-error))
         (t (message "no syntax checker enabled"))))
 
 (defun my-goto-previous-error ()
   (interactive)
   (cond
-   (lsp-bridge-mode
-    (lsp-bridge-jump-to-prev-diagnostic))
-   (flycheck-mode
-    (flycheck-previous-error))
    (flymake-mode
     (flymake-goto-prev-error))
    (t (message "no syntax checker enabled"))))
 
 (defun my-list-errors ()
   (interactive)
-  (cond (flycheck-mode
-         (flycheck-list-errors))
-        (lsp-bridge-mode
-         (lsp-bridge-diagnostic-list))
-        (flymake-mode
+  (cond
+    (flymake-mode
          (flymake-show-buffer-diagnostics))
         (t (message "no syntax checker enabled"))))
 

@@ -29,13 +29,18 @@
 
 ;; part of the code are from Centaur emacs
 ;;; Code:
-(require 'cl)
+;; (require 'cl-lib)
+;; run M-x profiler-report to see what is hogging
+;; (require 'profiler)
+;; (profiler-start 'cpu)
+(defun efs/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                   (time-subtract after-init-time before-init-time)))
+           gcs-done))
 
-(when (version< emacs-version "25.1")
-  (error "This requires Emacs 25.1 and above!"))
-
-(when (not (version< emacs-version "29.0"))
-  (setq package-native-compile nil))
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
@@ -99,7 +104,7 @@
 
 (require 'init-tools)
 (require 'init-writing)
-(require 'init-reading)
+;;(require 'init-reading)
 
 ;; uis
 (require 'init-ui)

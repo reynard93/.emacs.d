@@ -253,10 +253,6 @@
          :map vertico-map
          ("s-d" . consult-dir)))
 
-(use-package consult-flycheck
-  :after (consult flycheck))
-
-
 (use-package embark
   :defer t
   :init
