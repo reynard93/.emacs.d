@@ -23,8 +23,6 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
 ;;
-
-
 ;; config js2-mode for js files
 (setq auto-mode-alist
       (append
@@ -36,24 +34,34 @@
          )
        auto-mode-alist))
 
+;; config for web mode
+(defun my-web-mode-indent-setup ()
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-enable-current-column-highlight t)
+  (setq web-mode-style-padding 0)
+  (setq web-mode-script-padding 0) ; web-mode, vue sfc no padding in the script section
+  (setq web-mode-markup-indent-offset 2) ; web-mode, html tag in html file, default is 4
+  (setq web-mode-css-indent-offset 2)    ; web-mode, css in html file
+  (setq web-mode-code-indent-offset 2)   ; web-mode, js code in html file
+  )
+
 (use-package typescript-mode
   :ensure t)
 
 (use-package web-mode
   :ensure t
-  )
+  :config
+  (my-web-mode-indent-setup)
+  :custom-face
+  (web-mode-current-element-highlight-face
+   ((t (:background "#d9dbd7" :foreground "#2d3428"))))
+  ;; light color for highlighting the current HTML element's column
+  (web-mode-current-column-highlight-face
+   ((t (:background "#d9dbd7"))))
+)
 
 (use-package emmet-mode
   :ensure t)
-
-;; config for web mode
-(defun my-web-mode-indent-setup ()
-  (setq web-mode-markup-indent-offset 2) ; web-mode, html tag in html file
-  (setq web-mode-css-indent-offset 2)    ; web-mode, css in html file
-  (setq web-mode-code-indent-offset 2)   ; web-mode, js code in html file
-  )
-
-(add-hook 'web-mode-hook 'my-web-mode-indent-setup)
 
 
 (defun my-toggle-web-indent ()
